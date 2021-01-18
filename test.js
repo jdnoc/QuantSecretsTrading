@@ -1,6 +1,6 @@
 const WebSocket = require('ws')
 
-const APIKEY = 'T264ajNjuWbbjrS_RZRiJ7pIdXhlfdFE'
+const APIKEY = '7NqNWlRwFW1VyrbWTBp9HvIIXhcf_PTW'
 const ws = new WebSocket('wss://socket.polygon.io/forex')
 
 // Connection Opened:
