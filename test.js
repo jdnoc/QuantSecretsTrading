@@ -1,24 +1,22 @@
-const WebSocket = require('ws')
+// const WebSocket = require('ws')
+// const ws = new WebSocket('wss://socket.polygon.io/forex')
+// import { polygonClient, restClient, websocketClient } from "polygon.io";
 
-const APIKEY = '7NqNWlRwFW1VyrbWTBp9HvIIXhcf_PTW'
-const ws = new WebSocket('wss://socket.polygon.io/forex')
+import fetch from 'node-fetch';
+import dotenv from 'dotenv';
+dotenv.config();
+const APIKEY = process.env.POLYGON_API_KEY;
 
-// Connection Opened:
-ws.on('open', () => {
-    console.log('Connected!')
-    ws.send(JSON.stringify({ "action": "auth", "params": APIKEY }))
-    ws.send(JSON.stringify({ "action": "subscribe", "params": "C.AUD/USD,C.USD/EUR,C.USD/JPY" }))
+fetch("https://api.polygon.io/v2/aggs/ticker/X:BTCUSD/range/1/minute/2020-10-14/2020-10-21?unadjusted=true&sort=asc&limit=120&apiKey=" + APIKEY, {
+    method: 'GET', // or 'PUT'
+    headers: {
+        'Content-Type': 'application/json',
+    }
 })
-
-// Per message packet:
-ws.on('message', (data) => {
-    data = JSON.parse(data)
-    data.map((msg) => {
-        if (msg.ev === 'status') {
-            return console.log('Status Update:', msg.message)
-        }
-        console.log('Tick:', msg)
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
     })
-})
-
-ws.on('error', console.log)
+    .catch((error) => {
+        console.error('Error:', error);
+    });
