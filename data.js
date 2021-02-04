@@ -153,7 +153,6 @@ function getTable(symbol) {
             return data;
         }
     });
-
 }
 
 function iterateAllTables(symbols) {
