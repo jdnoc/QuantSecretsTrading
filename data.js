@@ -1,10 +1,6 @@
-// const WebSocket = require('ws')
-// const ws = new WebSocket('wss://socket.polygon.io/forex')
-// import { polygonClient, restClient, websocketClient } from "polygon.io";
-
-var fetch = require('node-fetch');
-var dotenv = require('dotenv');
-var sqlite3 = require('sqlite3').verbose();
+import fetch from 'node-fetch';
+import dotenv from 'dotenv';
+import sqlite3 from 'sqlite3';
 
 dotenv.config();
 const APIKEY = process.env.POLYGON_API_KEY;
@@ -125,7 +121,7 @@ symbols = ["BTC", "ETH", "USDT", "XRP", "USDC", "LTC", "XLM", "UNI", "OMG", "EOS
 // getDataFromTo(startDate, "ETHUSD");
 
 //Single day
-async function getMultipleExchages(startDate, symbols) {
+async function getMultipleCurrencies(startDate, symbols) {
     for await (const symbol of symbols) {
         //if DB doesn't exist
         createNewDb(symbol + "USD");
@@ -150,7 +146,7 @@ function getTable(symbol) {
             data = rows;
             // close the database connection
             db.close();
-            return data;
+            return rows;
         }
     });
 }
@@ -162,7 +158,7 @@ function iterateAllTables(symbols) {
     }
 }
 
-// getMultipleExchages(startDate, symbols);
+// getMultipleCurrencies(startDate, symbols);
 
 // getAllTables(symbols)
 
